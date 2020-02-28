@@ -1,0 +1,212 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>FeynRules Wiki</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="canonical" href="http://html5-templates.com/" />
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" href="style.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+		<div class="wrapAll clearfix">
+			<div class="sidebar">
+				<div class="logo">
+					<a href="/"><img src='img/PhenoHighEXP.png' alt="logo"></a>
+				</div>
+				<div class="navigation">
+					<ul>
+						<li><a href="#">Main page</a></li>
+						<li><a href="#">Contents</a></li>
+						<li><a href="#">Featured content</a></li>
+					</ul>
+					<h3>Interaction</h3>
+					<ul>
+						<li><a href="#">Help</a></li>
+						<li><a href="#">About</a></li>
+						<li><a href="#">Portal</a></li>
+					</ul>
+				</div>
+
+
+			</div>
+			<div class="mainsection">
+				<div class="headerLinks">
+
+				</div>
+				<div class="tabs clearfix">
+					<div class="tabsLeft">
+						<ul>
+							<li><a href="#" class="active">Article</a></li>
+							<li><a href="#">Files</a></li>
+						</ul>
+					</div>
+					<div id="simpleSearch">
+						<input type="text" name="searchInput" id="searchInput" placeholder="Search Wikipedia" size="12" />
+						<div id="submitSearch"></div>
+					</div>
+					<div class="tabsRight">
+						<ul>
+							<li><a href="#" class="active">Read</a></li>
+							<li><a href="#">View source</a></li>
+							<li><a href="#">View history</a></li>
+						</ul>
+					</div>
+
+				</div>
+				<div class="article">
+					<h1>Short guide for Feynrules</h1>
+					<p class="siteSub">From the Phenomenology Group, Universidad de los Andes </p>
+					<p class="roleNote">This article is about the process to develop an extension of the SM using FeynRules.</p>
+
+					<div class="articleRight">
+						<div class="articleRightInner">
+							<img src="img/FlowChart.png" alt="FlowChart" />
+						</div>
+						This is a the typical scheme for a computational implentation of an extension of the SM
+					</div>
+					<p><strong>FeynRules</strong> is a Mathematica® package that allows the calculation of Feynman rules in momentum space for any QFT physics model. Feynrules needs a model-file(.fr) which describes the basic Interactions of the implemented lagrangian. Thus the Feynman rules can be computed from this model-file, FeynRules is not restricted to Standard Model(SM) interations, actually any QFT model can be implemented and tested in order to develop new physics. Feynrules computes Feynman rules at Leading Order(LO), in case that the user wants to implement calculations at Next to Leadin Order(NLO) level, one needs to include certain consideration to the model-file.</p>
+					<div class="contentsPanel">
+						<div class="contentsHeader">Contents</div>
+						<ul>
+							<li><span>1</span><a href="#Installation">Installation</a></li>
+							<li><span>2</span><a href="#FirstModel">First Model Implementation</a></li>
+							<li><span>3</span><a href="#RuFeynRules">Computing Feynman Rules</a></li>
+							<li><span>4</span><a href="#">Extending the SM</a></li>
+              <li><span>5</span><a href="#">Extensions at NLO</a></li>
+              <li><span>6</span><a href="#">Commom commands at FeynRules</a></li>
+						</ul>
+					</div>
+					<h2 id="Installation">Installation</h2>
+					<h3>Mathematica</h3>
+					<p>In order to install FeynRules the user needs to have installed Mathematica in their machines, the installation of mathematica can be refered in the following <a href="https://reference.wolfram.com/language/tutorial/InstallingMathematica.html">link</a> </p>
+					<h3>FeynRules Package</h3>
+          <p>In order to install the package of <a href="http://feynrules.irmp.ucl.ac.be/downloads/feynrules-current.tar.gz">FeynRules</a> download the package and untar it.</p>
+          <p>After you have alredy untar it, go to the feynrules-current folder and execute the FeynRulesPackage.m file in mathematica there should not be any error messages.</p>
+          <p>If there is any error messages refer to the <a href="https://feynrules.irmp.ucl.ac.be">Oficial Page</a>
+          <h2 id="FirstModel">First Model Implementation</h2>
+          <p>This first implementation is inspired on the FeynRules <a href="https://feynrules.irmp.ucl.ac.be/raw-attachment/wiki/WikiStart/Manual.pdf">Manual</a>, refer to it in order to have a deeping understanding of the construction of FeynRules</p>
+          <h3>Review of the Model</h3>
+          <p>The model under consideration is a variant of the <span lang="latex">\phi^{4}</span> theory. It displays all the most relevant features the user might encounter when implementing a new model. In particular, it shows how to:</p>
+          <ul>
+            <li><span>1. </span> define indices of various types</li>
+            <li><span>2. </span> Perform expasion of flavor incides </li>
+            <li><span>3. </span> define mixing matrices </li>
+            <li><span>4. </span> perform the rotation from the gauge eigenstates to the mass eigenstates </li>
+            <li><span>5. </span> add gauge interactions to the model </li>
+          </ul>
+          <p>the model consist of two complex scalar fields <span lang="latex">\phi_{i}(x), ~i=1,2 ~</span>  that interacts as the following lagrangian shows</p>
+          <div lang="latex"> \mathcal{L}= \partial_{\mu}\phi_{i}^{\dagger}\partial^{\mu}\phi_{i}-\phi^{\dagger}_{i}\mathcal{M}_{ij}\phi_{j}+(\phi_{i}^{\dagger}\lambda_{ij}\phi_{j})^2</div>
+          <p>please notice that every field is a doublet, such that <span lang="latex">\mathcal{M}_{ij}~</span> and <span lang="latex">\lambda_{ij}~</span> are real square matrices. We define the matrices such that they can be symmetric, in the following way</p>
+          <div lang="latex">\mathcal{M}=\begin{bmatrix}m_1^2& \frac{m^{2}_{12}}{2}\\ \frac{m^{2}_{12}}{2} & m_2^2\end{bmatrix} ~~\lambda= \begin{bmatrix}\lambda_{11} & \lambda_{12}\\ \lambda_{12} & \lambda_{22}\end{bmatrix} </div>
+          <p>As the matrix is not diagonal the fields <span lang="latex">\phi_{i}(x), ~i=1,2 ~</span> are not eigenstates, then in order to have the measurable fields it's necessary to make an unitary transformation in order to find the representation of the lagrangian in the mass-eigenstates space </p>
+          <div lang="latex">\phi_{i}=U_{ij}\Phi_{j}~~~ U^{T}\mathcal{M}U=\begin{bmatrix}M_1^2& 0\\ 0 & M_2^2\end{bmatrix} </div>
+          <p>Given that we need to define the rotation matrix, one needs to compute the eigenvalues and eigenvectors of the representation, this can be computed by hand or with some software tools, note that as we are fiding mass-eigenstates then the couplings are going to be dependent of the mixing of the gauge states.</p>
+          <p>Then the mass eigen values are</p>
+          <div lang="latex">M_{1,2}^2= \frac{1}{2}\left(m_1^2 + m_2^2 \pm \sqrt{(m_1^2-m_2^2)^2+m_{12}^{4}}\right)</div>
+          <p>In order to obtain this eigenstates one need to parametrize the rotation matrix<span lang="latex">U~</span>  as </p>
+          <div lang="latex">U=\begin{bmatrix}-sin\theta& cos\theta\\ cos\theta & sin\theta\end{bmatrix} </div>
+          where the sine of the angles reads as
+          <div lang="latex">sin\theta=\frac{m_{12}^2}{\sqrt{m_{12}^4+\left(m_1^2-m_2^2+\sqrt{(m_1^2-m_2^2)^2+m_{12}^4}\right)}}</div>
+          <p>Having alredy define the model one can define the model-file from the lagrangian in the eigen-mass space</p>
+          <h3>Defining the model as a (.fr) file </h3>
+          <p>Along this section it will be explained step by step how to implement the full <a>FirstModel.fr</a> file. The first step is optional, in this part we summarize the model information for things like the author, institution and metadata necessary to recognize the work implemented by every author, it can be done as the following way: </p>
+          <pre><code>M$ModelName = "First_Model";
+          M$Information = {
+               Authors -> "N.Vergara-Duran",
+               Institution -> "U.Andes",
+               Email -> "nf.vergara10@uniandes.edu.co",
+               Date -> "Feb, 11 2020",
+               References -> {"The Feynrules Manual"}
+             };</code></pre>
+          <p> After it has been properly cited, then we can start with the model itself, in this section we must define the indices for our fields and matrices, here it's where it's satated the dimesonality of the parameters in the spinor space. We will chose that the indices for the lagrangian would be in a range 2 given that we are working with doublets for the field, and clearly the index must be of type scalar. Each index denotes an object of the form <strong>Index[name, i]</strong>, and it can have different types as it's Lorentz, Spin or Weyl spinors. Moreover, the indices of type <strong>Lorentz, Spin, Spin1 and Spin2 </strong>are defined internally and do not need to be defined by the user. In addition, it is possible to specify how the different types of indices should
+            be printed on the screen. This is done via the <strong>IndexStyle</strong> command</p>
+             <pre><code>
+               IndexRange[ Index[Scalar] ] = Range[2];
+               IndexStyle[ Scalar, i];</code></pre>
+               <pre><code>
+          <p>After defining all the types of indices, the fundamental part of the model is to define the parameters (coupling constants, mixing angles and matrices, masses, etc.). All of this parameters must be stated on the following brakets  </p>
+                 M$Parameters = {};</code></pre>
+
+            <p>Each component of this list consists of an equality whose left-hand side is a label and the right-hand side is a list of Mathematica replacement rules, parameters can either be internal or external this would if either the parameter is indepent an it's given as an input or either the parameter is dependet(internal) of the independent parameters of the model. </p>
+            <pre><code>
+              lam == {
+                ParameterType -> External, ComplexParameter -> False,
+                Indices -> {Index[Scalar], Index[Scalar]},
+                Value -> {lam[1, 1] -> 0.9, lam[1, 2] -> 0.1, lam[2, 1] -> 0.1,
+                   lam[2, 2] -> 0.9},
+                Description -> "Scalar quartic coupling matrix"},
+            </code></pre>
+
+            <pre><code>
+              MM == {
+                ParameterType -> External,
+                ComplexParameter -> False,
+                Indices -> {Index[Scalar], Index[Scalar]},
+                Value -> {MM[1, 1] -> 100^2,
+                   MM[1, 2] -> 10^2/2,
+                   MM[2, 1] -> 10^2/2,
+                    MM[2, 2] -> 200^2},
+                 Description -> "Mass matrix"},
+            </code></pre>
+          <h2 id="RuFeynRules">Computing Feynman Rules</h2>
+          <h3>Running FeynRules</h3>
+          <p>After the model description is created and the Lagrangian constructed, it can
+            be loaded into FeynRules and the Feynman rules will be obtained.</p>
+          <p>The first thing that must be done when using FeynRules is to load the
+            package into a Mathematica session as following</p>
+            <pre><code>
+              FeynRulesPath = SetDirectory[ <the address of the package> ]; << FeynRules`</code></pre>
+          <p>This should be done before we load any model, the address of the package must be the same at which we have the <a>FeynRulesPackage.m</a> saved.</p>
+          <p>The model can be loaded using the command <strong>LoadModel</strong>, every file that's not in the curren directory, in order to load it must be specified the respective path of the file. Also the model must be loaded every time it's modified. </p>
+          <pre><code>
+            LoadModel[ < file.fr >, < file2.fr >, ... ]</code></pre>
+          <p>After the model is loaded and the Lagrangian is defined, the Feynman rules can be extracted using the command <strong>FeynmanRules</strong>.</p>
+          <pre><code>
+            FeynmanRules[ Lscal ]</code></pre>
+
+          <p>There is also an enormous number of functions that can be used in order to analyze and confirm that the model was correted implemented in the file. All this commands can be viewed in the <a href="#Command"> Commom commands at FeynRules </a> section. </p>
+
+          <div class="lavenderBox">
+						<div class="header">Panel title</div>
+						<div class="subtitle linklist"><a href="#">Lorem</a> <a href="#">Ipsum</a> <a href="#">Dolorestitas</a> </div>
+						<div class="linklist">
+							<a href="#">Percipit </a> <a href="#">Mnesarchum </a> <a href="#">Molestie </a> <a href="#">Phaedrum </a> <a href="#">Luptatum constituam </a> <a href="#">Habeo adipisci </a> <a href="#">Inani zril  </a> <a href="#">Forensibus sea </a> <a href="#">Habeo adipisci </a> <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a><a href="#">Percipit </a> <a href="#">Mnesarchum </a> <a href="#">Molestie </a> <a href="#">Phaedrum </a> <a href="#">Luptatum constituam </a> <a href="#">Habeo adipisci </a> <a href="#">Inani zril  </a> <a href="#">Vel nisl albucius </a> <a href="#">Habeo adipisci </a> <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Percipit maiestatis </a> <a href="#">Regione suscipit </a> <a href="#">Percipit maiestatis </a>
+						</div>
+
+						<div class="subtitle">Subtitle</div>
+					</div>
+
+					<div class="categories">
+						<a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a>
+					</div>
+
+				</div>
+				<div class="pagefooter">
+					This page was last edited on 29.07.2017 | Template by <a href="http://html5-templates.com/" target="_blank" rel="nofollow">HTML5 Templates</a> <!-- Please leave this link unchanged -->
+					<div class="footerlinks">
+						<a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie statement</a> <a href="#">Developers</a>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+        <script src="script.js"></script>
+
+
+    </body>
+</html>
